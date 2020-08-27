@@ -1,0 +1,49 @@
+DRAFT
+
+At some point the time comes when you need to actually manage oracle database, then you are going to be paraise by design of oracle, which in his principles is similar to linux, where everything is setup by files
+
+* database is file
+* cache is file but difrent
+* redo table is file
+* temporary space is file
+
+Please, so that it doesn't come to your mind a comon sense though, "everything though until you learn it", yes it is true but it doesn't mean that manage the oracle should have to be hard to master.
+
+
+Problems list
+
+1) you have big database with a lot of data (eg. it grows over time, and you are proud of it because it cover a lot of scenarios, and also it helps to optimise performance)
+2) you are doing multiple deploys to the same oracle instance (deploy, delete tables and recreate it again)
+3) 32GB database size is max, issue
+
+NOTE: command will require database server restart or database instance restart to apply changes
+
+1)
+2)
+
+increase tablespace
+
+-- add datafile -- oracle adding another file to tablespace
+ALTER TABLESPACE tablespace_name
+    ADD DATAFILE 'path_to_datafile'
+    SIZE size
+    AUTOEXTEND ON;
+
+-- Resize
+ALTER DATABASE
+    DATAFILE 'path_to_datafile'
+    RESIZE size;
+
+
+References
+https://www.oracletutorial.com/oracle-administration/oracle-extend-tablespace/
+https://stackoverflow.com/questions/43670517/how-to-add-the-datafile-to-tablespace-which-is-already-full
+
+3)
+ORA-01144: File size (4194304 blocks) exceeds maximum of 4194303 blocks
+
+default data file block size is 8KB so it is 32GB
+
+References
+http://www.dba-oracle.com/t_bigfile_tablespace_tips.htm
+
